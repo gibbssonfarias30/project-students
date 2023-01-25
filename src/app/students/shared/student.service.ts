@@ -10,11 +10,11 @@ import { Student, StudentPage } from './student.model';
 export class StudentService {
 
     constructor(private http: HttpClient) { }
-    paginar(size: number = 5, page: number = 0): Observable<StudentPage> {
+    paginate(size: number = 5, page: number = 0): Observable<StudentPage> {
         let params = new HttpParams();
         params = params.append('size', size);
         params = params.append('page', page);
-        params = params.append('sort', 'name,desc');
+        params = params.append('sort', 'name');
 
         return this.http.get<StudentPage>(`${environment.apiBase}`, { params });
     }

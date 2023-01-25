@@ -10,7 +10,7 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class StudentsComponent implements OnInit {
     studentPage?: StudentPage;
-    displayedColumns = ['titulo', 'precio', 'fechaCreacion', 'acciones']
+    displayedColumns = ['name', 'lastName', 'dni', 'email', 'birthDate']
 
     constructor(private studentService: StudentService) { }
 
@@ -18,32 +18,20 @@ export class StudentsComponent implements OnInit {
         this.getAll();
     }
     getAll() {
-        this.studentService.paginar()
+        this.studentService.paginate()
             .subscribe(studentPage => {
                 console.log("Students:", studentPage);
                 this.studentPage = studentPage;
             })
     }
 
-    deleteStudent(student: Student) {
-        if (!confirm('¿Estás seguro de eliminar este libro?')) {
-            return;
-        }
-
-        this.studentService.delete(student.id)
-            .subscribe(() => {
-                this.getAll();
-            })
-    }
-
-
-    paginarLibros(event: PageEvent) {
+    pagingStudents(event: PageEvent) {
         const size = event.pageSize;
         const page = event.pageIndex;
 
-        this.studentService.paginar(size, page)
+        this.studentService.paginate(size, page)
             .subscribe(studentPage => {
-                console.log("Libros:", studentPage);
+                console.log("Students:", studentPage);
                 this.studentPage = studentPage;
             })
     }
